@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {ProductConsumer} from '../Context';
+import PropsTypes from 'prop-types';
 
 class Product extends Component {
     render() {
@@ -9,25 +10,29 @@ class Product extends Component {
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
                 <div className="card">
-                    <div className="img-container p-5" onClick={()=>console.log('clicked')
-                    }>
-                        <Link to="/details">
-                            <img src={img} alt="product" className="card-img-top" />
-                        </Link>
-                        <button className="card-btn" disabled={inCart ? true : false}
-                            onClick={() =>{
-                                console.log('Add to cart');
-                                
-                            }}
-                        >
-                            {inCart ? (
-                                <p className="text-capitalize mb-0" disabled>{" "} in cart</p>
-                            ):(
-                                <i className="fa fa-cart-plus" />
-                            )}
-                        </button>
-                    </div>
-                    
+                    <ProductConsumer>
+                        {value => (
+                            <div className="img-container p-5" onClick={()=>
+                                value.handleDetail(id)
+                        }>
+                            <Link to="/details">
+                                <img src={img} alt="product" className="card-img-top" />
+                            </Link>
+                            <button className="card-btn" disabled={inCart ? true : false}
+                                onClick={() => {
+                                    value.addToCart(id);
+                                    
+                                }}
+                            >
+                                {inCart ? (
+                                    <p className="text-capitalize mb-0" disabled>{" "} in cart</p>
+                                ):(
+                                    <i className="fa fa-cart-plus" />
+                                )}
+                            </button>
+                        </div>
+                        )}               
+                </ProductConsumer>
                     {/* Product Footer */}
                     <div className="card footer d-flex justify-content-beetween">
                             <p className="align-self-center mb-0">{title}</p>
@@ -42,6 +47,15 @@ class Product extends Component {
 }
 
 export default Product;
+Product.propsType = {
+    product : PropsTypes.shape({
+        id : PropsTypes.number,
+        img : PropsTypes.string,
+        title : PropsTypes.string,
+        price : PropsTypes.number,
+        inCart : PropsTypes.bool,
+    }).IsRequired
+};
 
 const ProductWrapper = styled.div`
     .card{
