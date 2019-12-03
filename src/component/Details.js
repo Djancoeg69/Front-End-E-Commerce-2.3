@@ -30,7 +30,7 @@ class Details extends Component {
                                     <ButtonR> 
                                         {/* Menubah button pada halaman detail agar tidak mengambil desain button.js */}
                                             <Link to="/">
-                                                <ButtonContainer className="btn-btn mr-2">
+                                            <ButtonContainer className="btn-btn mr-2">
                                                     Back to Product
                                             </ButtonContainer>
                                             </Link>
