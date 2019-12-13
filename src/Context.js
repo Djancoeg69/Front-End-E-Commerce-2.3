@@ -8,8 +8,11 @@ class ProductProvider extends Component {
         products:[],
         detailProduct:detailProduct,
         cart : [],
-        modalOpen : true,
-        modalProduct : detailProduct
+        modalOpen : false,
+        modalProduct : detailProduct,
+        cartSubtotal : 0,
+        cartTax : 0,
+        cartTotal : 0
     }
 
     componentDidMount(){
@@ -61,9 +64,26 @@ class ProductProvider extends Component {
             return {modalOpen:false}
         })
     }
+    increase = id => {
+        console.log('this.increase');
+    }
+    decrease = id => {
+        console.log('this.decrease');
+    }
+    removeItem = id => {
+        console.log('item remove');
+    }
+    clearCart = id =>{
+        console.log('cart cleared');
+    }
     render() {
         return (
-            <ProductContext.Provider value={{...this.state, handleDetail:this.handleDetail, addToCart:this.addToCart, openModal:this.openModal, closeModal:this.closeModal}}>
+            <ProductContext.Provider value={{...this.state, handleDetail:this.handleDetail, addToCart:this.addToCart, openModal:this.openModal, closeModal:this.closeModal,
+                increase: this.increase,
+                decrease: this.decrease,
+                removeItem : this.removeItem,
+                clearCart : this.clearCart
+            }}>
                 {this.props.children}
             </ProductContext.Provider>
         );
